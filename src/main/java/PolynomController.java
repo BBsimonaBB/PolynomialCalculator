@@ -65,10 +65,23 @@ public class PolynomController {
             JButton o = (JButton) e.getSource();
            if(m_view.getCarePolinom().getSelectedItem() == "Polinom 1")
            {
-               m_view.setPolinom1(m_view.getInPolinom1() + o.getName());
+               if(o.getName().equals("del")) {
+                   int len = m_view.getInPolinom1().length();
+                   String sub = m_view.getInPolinom1().substring(0, len - 1);
+                   m_view.setPolinom1(sub);
+               }
+               else
+                   m_view.setPolinom1(m_view.getInPolinom1() + o.getName());
            }
-           else
-               m_view.setPolinom2(m_view.getInPolinom2() + o.getName());
+           else {
+               if(o.getName().equals("del")) {
+                   int len = m_view.getInPolinom2().length();
+                   String sub = m_view.getInPolinom2().substring(0, len - 1);
+                   m_view.setPolinom2(sub);
+               }
+               else
+                     m_view.setPolinom2(m_view.getInPolinom2() + o.getName());
+           }
         }
     }
     class ClearListener implements ActionListener {
