@@ -1,4 +1,5 @@
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class PolynomController {
@@ -18,6 +19,7 @@ public class PolynomController {
         view.addMultiplyListener(new MultiplyListener());
         view.addAddListener(new AddListener());
         view.addClearListener(new ClearListener());
+        view.addBtnNumberListener(new BtnNumberListener());
     }
 
 
@@ -56,6 +58,17 @@ public class PolynomController {
             } catch (NumberFormatException nfex) {
                 m_view.showError("Bad input: '" + userInput + "'");
             }
+        }
+    }
+    class BtnNumberListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JButton o = (JButton) e.getSource();
+           if(m_view.getCarePolinom().getSelectedItem() == "Polinom 1")
+           {
+               m_view.setPolinom1(m_view.getInPolinom1() + o.getName());
+           }
+           else
+               m_view.setPolinom2(m_view.getInPolinom2() + o.getName());
         }
     }
     class ClearListener implements ActionListener {
