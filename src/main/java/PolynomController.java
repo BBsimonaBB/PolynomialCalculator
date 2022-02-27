@@ -49,16 +49,19 @@ public class PolynomController {
 
     class AddListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            String userInput = "";
-            try {
-                userInput = m_view.getInPolinom1();
+            String userInput1 = "", userInput2 = "-1";
+            //try {
+            userInput1 = m_view.getInPolinom1();
+            m_model.makePolynom(userInput1);
                 //m_model.addBy(userInput);
                // m_view.setTotal(m_model.getValue());
-                m_model.recongizeOp(userInput);
 
-            } catch (NumberFormatException nfex) {
-                m_view.showError("Bad input: '" + userInput + "'");
-            }
+            userInput2 = m_view.getInPolinom2();
+            m_model.makePolynom(userInput2);
+
+          //  } catch (NumberFormatException nfex) {
+          //      m_view.showError("Bad input: '" + userInput + "'");
+          //  }
         }
     }
     class BtnNumberListener implements ActionListener {
