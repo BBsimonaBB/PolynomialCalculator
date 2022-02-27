@@ -67,6 +67,8 @@ public class PolynomController {
            {
                if(o.getName().equals("del")) {
                    int len = m_view.getInPolinom1().length();
+                   if(len == 0)
+                       len ++;
                    String sub = m_view.getInPolinom1().substring(0, len - 1);
                    m_view.setPolinom1(sub);
                }
@@ -76,6 +78,8 @@ public class PolynomController {
            else {
                if(o.getName().equals("del")) {
                    int len = m_view.getInPolinom2().length();
+                   if(len == 0)
+                       len ++;
                    String sub = m_view.getInPolinom2().substring(0, len - 1);
                    m_view.setPolinom2(sub);
                }
