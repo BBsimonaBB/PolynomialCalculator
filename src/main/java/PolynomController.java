@@ -52,8 +52,9 @@ public class PolynomController {
             String userInput = "";
             try {
                 userInput = m_view.getInPolinom1();
-                m_model.addBy(userInput);
-                m_view.setTotal(m_model.getValue());
+                //m_model.addBy(userInput);
+               // m_view.setTotal(m_model.getValue());
+                m_model.recongizeOp(userInput);
 
             } catch (NumberFormatException nfex) {
                 m_view.showError("Bad input: '" + userInput + "'");

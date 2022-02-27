@@ -43,4 +43,27 @@ public class PolynomModel {
     public String getValue() {
         return m_total.toString();
     }
+    public int alegOperandul(String s)
+    {
+        if(!s.contains("+")) return s.indexOf("-");
+        else if (!s.contains("-")) return s.indexOf("+");
+        else return Math.min(s.indexOf("+"), s.indexOf("-"));
+     }
+     public int cautIcs(String s)
+     {
+         if(s.indexOf("^") == s.indexOf("x") + 1) //inseamna ca avem putere
+             return alegOperandul(s)-1;
+         else return s.indexOf("x");
+     }
+    public void recongizeOp(String s)
+    {
+        int piece = cautIcs(s);
+        while(piece != -1) {
+            System.out.println(s.substring(0, piece+1));
+            s = s.substring(piece+1); //asta e un monoid!!
+            piece = cautIcs(s);
+        }
+        System.out.println(s);
+
+    }
 }
