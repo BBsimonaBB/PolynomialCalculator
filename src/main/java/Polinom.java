@@ -7,10 +7,22 @@ public class Polinom {
         this.polinom = p;
     }
 
+    public ArrayList<Monomial> getPolinom() {
+        return polinom;
+    }
+
+    public void setPolinom(ArrayList<Monomial> polinom) {
+        this.polinom = polinom;
+    }
+
     @Override
     public String toString() {
-        return "Polinom{" +
-                "polinom=" + polinom +
-                '}';
+        String tot = "";
+        for(Monomial m : polinom) {
+            if(m.getCoef() > 0)
+            tot = tot + "+" + m.toString();
+            else tot = tot + "" + m.toString();
+        }
+        return tot;
     }
 }

@@ -1,5 +1,6 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PolynomModel {
     //... Constants
@@ -27,9 +28,34 @@ public class PolynomModel {
     public void multiplyBy(String operand) {
         m_total = m_total.multiply(new BigInteger(operand));
     }
-    public void addBy(String operand){
-        m_total = m_total.add(new BigInteger(operand));
+    public Polinom addBy(Polinom poli1, Polinom poli2){
+        ArrayList<Monomial> op1 = poli1.getPolinom();
+        ArrayList<Monomial> op2 = poli2.getPolinom();
+        ArrayList<Monomial> rez = new ArrayList<>();
+        Polinom rezultat = new Polinom(rez);
+        for(Monomial i : op1) {
+            for (Monomial j : op2) {
+                if (i.getGrad() == j.getGrad())
+                    i.setCoef(i.getCoef() + j.getCoef());
+            }
+            rez.add(i);
+        }
+        for(Monomial j : op2){
+            boolean gasit = false;
+            for(Monomial t :rez) {
+                if (t.getGrad() == j.getGrad())
+                    gasit = true;
+            }
+            if (!gasit)
+                rez.add(j);
+        }
+        Collections.sort(rez);
+        return rezultat;
     }
+    /*public Polinom substractBy(Polinom poli1, Polinom poli2)
+    {
+
+    }*/
 //================================================================= setValue
     /** Set the total value.
      *@param value New value that should be used for the calculator total.
@@ -92,10 +118,9 @@ public class PolynomModel {
                  m.setCoef(recogDivMulSign(s.substring(0,poz)));
              }
          }
-         System.out.println(m);
          return m;
      }
-    public void makePolynom(String s)
+    public Polinom makePolynom(String s)
     {
         if(!s.equals("")) {
             s.trim();
@@ -106,11 +131,13 @@ public class PolynomModel {
                 s = s.substring(piece + 1); //asta e un monoid!!
                 piece = cautIcs(s);
             }
-            pMonomials.add(recognizeMonoid(s));
+            if(!s.equals(""))
+                 pMonomials.add(recognizeMonoid(s));
 
             Polinom p = new Polinom(pMonomials);
-            System.out.println(p);
+            return p;
         }
+        else return null;
 
     }
 }

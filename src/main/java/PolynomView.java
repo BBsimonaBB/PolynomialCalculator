@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class PolynomView extends JFrame {
     private JTextField inPolinom1= new JTextField(5);
     private JTextField inPolinom2 = new JTextField(5);
-    private JTextField m_totalTf = new JTextField(10);
+    private JTextField m_totalTf = new JTextField(100);
     private JComboBox m_carePoli = new JComboBox(new String[]{"Polinom 1", "Polinom 2"});
     private JButton m_multiplyBtn = new JButton("Multiply");
     private JButton m_addBtn = new JButton("Add");
@@ -90,8 +90,8 @@ public class PolynomView extends JFrame {
 
         JLabel t;
         content.add(t = new JLabel("Total"));
-        t.setBounds(280, 400, 30, 20);
-        m_totalTf.setBounds(310,400,100,20);
+        t.setBounds(200, 400, 30, 20);
+        m_totalTf.setBounds(250,400,200,20);
         content.add(m_totalTf);
 
         content.add(m_clearBtn);

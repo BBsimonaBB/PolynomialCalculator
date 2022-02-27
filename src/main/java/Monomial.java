@@ -1,4 +1,4 @@
-public class Monomial {
+public class Monomial implements Comparable<Monomial> {
     private int grad;
     private float coef;
 
@@ -22,12 +22,19 @@ public class Monomial {
     public void setCoef(float coef) {
         this.coef = coef;
     }
-
     @Override
     public String toString() {
-        return "Monomial{" +
-                "grad=" + grad +
-                ", coef=" + coef +
-                '}';
+        if(grad == 0) return coef + "";
+        else if(grad == 1) return  coef + "*x";
+        else return coef + "*x^" + grad;
+    }
+
+    @Override
+    public int compareTo(Monomial o) {
+        if(this.coef > o.coef)
+            return 1;
+        if(this.coef == o.coef)
+            return 0;
+        else return -1;
     }
 }
