@@ -19,6 +19,7 @@ public class PolynomController {
         view.addMultiplyListener(new MultiplyListener());
         view.addAddListener(new AddListener());
         view.addSubstractListener(new SubstractListener());
+        view.addMultiplyListener(new MultiplyListener());
         view.addDerivateListener(new DerivateListener());
         view.addIntegrateListener(new IntegrateListener());
         view.addClearListener(new ClearListener());
@@ -38,17 +39,19 @@ public class PolynomController {
      */
     class MultiplyListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            String userInput = "";
-            try {
-                userInput = m_view.getInPolinom1();
-                m_model.multiplyBy(userInput);
-                m_view.setTotal(m_model.getValue());
+            String userInput1 = "";
+            String userInput2 = "";
+            userInput1 = m_view.getInPolinom1();
+            Polinom p1 = m_model.makePolynom(userInput1);
 
-            } catch (NumberFormatException nfex) {
-                m_view.showError("Bad input: '" + userInput + "'");
+            userInput2 = m_view.getInPolinom2();
+            Polinom p2 = m_model.makePolynom(userInput2);
+
+            //p1 = m_model.multiplyBy(p1,p2);
+            m_view.setTotal(m_model.multiplyBy(p1,p2).toString());
             }
         }
-    }//end inner class MultiplyListener
+    //end inner class MultiplyListener
 
     class AddListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -59,7 +62,8 @@ public class PolynomController {
 
             userInput2 = m_view.getInPolinom2();
             Polinom p2 = m_model.makePolynom(userInput2);
-
+            System.out.println(p1);
+            System.out.println(p2);
             p1 = m_model.addBy(p1,p2);
             m_view.setTotal(p1.toString());
         }
@@ -86,6 +90,7 @@ public class PolynomController {
 
             p1 = m_model.derivateBy(p1);
             m_view.setTotal(p1.toString());
+            System.out.println(p1);
         }
     }
     class IntegrateListener implements  ActionListener{

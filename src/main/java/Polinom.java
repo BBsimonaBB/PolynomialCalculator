@@ -20,7 +20,7 @@ public class Polinom {
     public String toString() {
         String tot = "";
         for(Monomial m : polinom) {
-            if(m.getCoef() > 0)
+            if(m.getCoef() >= 0)
             tot = tot + "+" + m.toString();
             else tot = tot + "" + m.toString();
         }
@@ -30,8 +30,7 @@ public class Polinom {
     {
         for(Monomial i : polinom) {
             for (Monomial j : poli.polinom) {
-                if (i.getGrad() == j.getGrad())
-                    i.setCoef(i.getCoef() + j.getCoef());
+                i.add(j);
             }
         }
         for(Monomial j : poli.polinom){
@@ -76,10 +75,7 @@ public class Polinom {
     {
         for(Monomial i : polinom)
         {
-            System.out.println(i.getCoef());
-            i.setCoef(i.getCoef() * i.getGrad());
-            if(i.getGrad() != 0)
-                i.setGrad(i.getGrad() - 1);
+            i.derivate();
         }
         Collections.sort(polinom);
         return this;
@@ -88,9 +84,33 @@ public class Polinom {
     {
         for(Monomial i : polinom)
         {
-            i.setGrad(i.getGrad() + 1);
-            i.setCoef(i.getCoef() / i.getGrad());
+            i.integrate();
         }
+        Collections.sort(polinom);
         return this;
     }
+    public Polinom addSameGrades(Polinom poli)
+    {
+        int index = 0;
+        for(Monomial i: polinom)
+        {
+            if (i.getGrad() == poli.polinom.get(index).getGrad()) {
+                i.add(poli.polinom.get(index));
+                poli.polinom.remove(index);
+            }
+            else index ++;
+        }
+    }
+    public Polinom multiply(Polinom poli1)
+    {
+        Polinom rez = new Polinom(new ArrayList<>());
+        for(Monomial i :polinom){
+            for(Monomial j :poli1.polinom)
+                rez.polinom.add(i.multiply(j));
+        }
+        Collections.sort(rez.polinom); //acum trebuie adunate elem cu grade egale
+        //cod de adaugat...chem add same grades
+        return rez;
+    }
+
 }

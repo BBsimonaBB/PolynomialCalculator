@@ -1,6 +1,5 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class PolynomModel {
     //... Constants
@@ -23,10 +22,11 @@ public class PolynomModel {
 
     //=============================================================== multiplyBy
     /** Multiply current total by a number.
-     *@param operand Number (as string) to multiply total by.
+     * @param operand Number (as string) to multiply total by.
+     * @return
      */
-    public void multiplyBy(String operand) {
-        m_total = m_total.multiply(new BigInteger(operand));
+    public Polinom multiplyBy(Polinom poli1, Polinom poli2) {
+        return poli1.multiply(poli2);
     }
     public Polinom addBy(Polinom poli1, Polinom poli2){
         return poli1.addition(poli2);
@@ -56,7 +56,7 @@ public class PolynomModel {
     public String getValue() {
         return m_total.toString();
     }
-    public int alegOperandul(String s)
+    public int alegOperand(String s)
     {
         if(s.indexOf("+",1) == -1) return s.indexOf("-",1);
         else if (s.indexOf("-",1) == -1) return s.indexOf("+",1);
@@ -65,67 +65,28 @@ public class PolynomModel {
 }
     public int cautIcs(String s)
      {
-         if(s.indexOf("^") == s.indexOf("x") + 1)
-             return alegOperandul(s)-1;
+         if(s.indexOf("^") == s.indexOf("x") + 1) //daca am putere
+             return alegOperand(s)-1;
          else return s.indexOf("x");
-     }
-     public float recogDivSign(String s)
-     {
-         if(s.contains("/")) //avem cv fractie
-         {
-             int poz = s.indexOf("/");
-             return (float)Integer.parseInt(s.substring(0,poz))/Integer.parseInt(s.substring(poz+1));
-         }
-         else {
-             if (s.contains("+")) return Float.parseFloat(s.substring(1));
-             else if (s.contains("-")) return (float) (-1) * Float.parseFloat(s.substring(1));
-             else return Float.parseFloat(s);
-         }
-     }
-     public Monomial recognizeMonoid(String s)
-     {
-         Monomial m = new Monomial(0,0);
-         if(!s.contains("x")) {
-             m.setGrad(0);
-             m.setCoef(recogDivSign(s));
-         }
-         else{
-             if(!s.contains("^")) {
-                 m.setGrad(1);
-             }
-             else{
-                 int poz = s.indexOf("^");
-                 m.setGrad(Integer.parseInt(s.substring(poz+1)));
-             }
-             if(!s.contains("*"))
-                 if(s.charAt(0) == '-')
-                     m.setCoef((float)-1);
-                 else m.setCoef((float)1);
-             else {
-                 int poz = s.indexOf("*");
-                 m.setCoef(recogDivSign(s.substring(0,poz)));
-             }
-         }
-         return m;
      }
     public Polinom makePolynom(String s)
     {
         if(!s.equals("")) {
-            s.trim();
             int piece = cautIcs(s);
-            ArrayList<Monomial> pMonomials = new ArrayList<>(10);
+            ArrayList<Monomial> pMonomials = new ArrayList<>();
             while (piece > -1) {
-                pMonomials.add(recognizeMonoid(s.substring(0, piece + 1)));
+                Monomial m = new Monomial(0,0);
+                m.recognizeMonoid(s.substring(0, piece + 1));
+                pMonomials.add(m);
                 s = s.substring(piece + 1); //asta e un monoid!!
                 piece = cautIcs(s);
             }
-            if(!s.equals(""))
-                 pMonomials.add(recognizeMonoid(s));
-
-            Polinom p = new Polinom(pMonomials);
-            return p;
+            if(!s.equals("")) {
+                Monomial m = new Monomial(0, 0);
+                pMonomials.add(m.recognizeMonoid(s));
+            }
+            return new Polinom(pMonomials);
         }
         else return null;
-
     }
 }
