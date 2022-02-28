@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Polinom {
     ArrayList<Monomial> polinom;
@@ -24,5 +25,72 @@ public class Polinom {
             else tot = tot + "" + m.toString();
         }
         return tot;
+    }
+    public Polinom addition(Polinom poli)
+    {
+        for(Monomial i : polinom) {
+            for (Monomial j : poli.polinom) {
+                if (i.getGrad() == j.getGrad())
+                    i.setCoef(i.getCoef() + j.getCoef());
+            }
+        }
+        for(Monomial j : poli.polinom){
+            boolean gasit = false;
+            for(Monomial i :polinom) {
+                if (i.getGrad() == j.getGrad()) {
+                    gasit = true;
+                    break;
+                }
+            }
+            if (!gasit)
+                polinom.add(j);
+        }
+        Collections.sort(polinom);
+    return this;
+    }
+    public  Polinom substract(Polinom poli)
+    {
+        for(Monomial i : polinom) {
+            for (Monomial j : poli.polinom) {
+                if (i.getGrad() == j.getGrad())
+                    i.setCoef(i.getCoef() - j.getCoef());
+            }
+        }
+        for(Monomial j : poli.polinom){
+            boolean gasit = false;
+            for(Monomial i :polinom) {
+                if (i.getGrad() == j.getGrad()) {
+                    gasit = true;
+                    break;
+                }
+            }
+            if (!gasit) {
+                j.setCoef((-1) * j.getCoef());
+                polinom.add(j);
+            }
+        }
+        Collections.sort(polinom);
+        return this;
+    }
+    public Polinom derivate()
+    {
+        for(Monomial i : polinom)
+        {
+            System.out.println(i.getCoef());
+            i.setCoef(i.getCoef() * i.getGrad());
+            if(i.getGrad() != 0)
+                i.setGrad(i.getGrad() - 1);
+        }
+        Collections.sort(polinom);
+        return this;
+    }
+    public Polinom integrate()
+    {
+        for(Monomial i : polinom)
+        {
+            i.setGrad(i.getGrad() + 1);
+            i.setCoef(i.getCoef() / i.getGrad());
+        }
+        return this;
     }
 }

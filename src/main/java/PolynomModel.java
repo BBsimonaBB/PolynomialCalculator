@@ -29,33 +29,19 @@ public class PolynomModel {
         m_total = m_total.multiply(new BigInteger(operand));
     }
     public Polinom addBy(Polinom poli1, Polinom poli2){
-        ArrayList<Monomial> op1 = poli1.getPolinom();
-        ArrayList<Monomial> op2 = poli2.getPolinom();
-        ArrayList<Monomial> rez = new ArrayList<>();
-        Polinom rezultat = new Polinom(rez);
-        for(Monomial i : op1) {
-            for (Monomial j : op2) {
-                if (i.getGrad() == j.getGrad())
-                    i.setCoef(i.getCoef() + j.getCoef());
-            }
-            rez.add(i);
-        }
-        for(Monomial j : op2){
-            boolean gasit = false;
-            for(Monomial t :rez) {
-                if (t.getGrad() == j.getGrad())
-                    gasit = true;
-            }
-            if (!gasit)
-                rez.add(j);
-        }
-        Collections.sort(rez);
-        return rezultat;
+        return poli1.addition(poli2);
     }
-    /*public Polinom substractBy(Polinom poli1, Polinom poli2)
+    public Polinom substractBy(Polinom poli1, Polinom poli2){
+        return poli1.substract(poli2);
+    }
+    public Polinom derivateBy(Polinom poli1)
     {
-
-    }*/
+        return poli1.derivate();
+    }
+    public Polinom integrateBy(Polinom poli1)
+    {
+        return poli1.integrate();
+    }
 //================================================================= setValue
     /** Set the total value.
      *@param value New value that should be used for the calculator total.
@@ -72,18 +58,18 @@ public class PolynomModel {
     }
     public int alegOperandul(String s)
     {
-        if(s.indexOf("+",1) == -1) return s.indexOf("-");
-        else if (s.indexOf("-",1) == -1) return s.indexOf("+");
+        if(s.indexOf("+",1) == -1) return s.indexOf("-",1);
+        else if (s.indexOf("-",1) == -1) return s.indexOf("+",1);
         else
             return Math.min(s.indexOf("+",1), s.indexOf("-",1));
 }
     public int cautIcs(String s)
      {
-         if(s.indexOf("^") == s.indexOf("x") + 1) //inseamna ca avem putere
+         if(s.indexOf("^") == s.indexOf("x") + 1)
              return alegOperandul(s)-1;
          else return s.indexOf("x");
      }
-     public float recogDivMulSign(String s)
+     public float recogDivSign(String s)
      {
          if(s.contains("/")) //avem cv fractie
          {
@@ -101,7 +87,7 @@ public class PolynomModel {
          Monomial m = new Monomial(0,0);
          if(!s.contains("x")) {
              m.setGrad(0);
-             m.setCoef(recogDivMulSign(s));
+             m.setCoef(recogDivSign(s));
          }
          else{
              if(!s.contains("^")) {
@@ -112,10 +98,12 @@ public class PolynomModel {
                  m.setGrad(Integer.parseInt(s.substring(poz+1)));
              }
              if(!s.contains("*"))
-                 m.setCoef((float)1);
+                 if(s.charAt(0) == '-')
+                     m.setCoef((float)-1);
+                 else m.setCoef((float)1);
              else {
                  int poz = s.indexOf("*");
-                 m.setCoef(recogDivMulSign(s.substring(0,poz)));
+                 m.setCoef(recogDivSign(s.substring(0,poz)));
              }
          }
          return m;

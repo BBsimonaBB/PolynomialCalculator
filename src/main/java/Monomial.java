@@ -32,9 +32,9 @@ public class Monomial implements Comparable<Monomial> {
     @Override
     public int compareTo(Monomial o) {
         if(this.coef > o.coef)
-            return 1;
+            return -1;
         if(this.coef == o.coef)
             return 0;
-        else return -1;
+        else return 1;
     }
 }

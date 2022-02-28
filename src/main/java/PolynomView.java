@@ -152,6 +152,18 @@ public class PolynomView extends JFrame {
         m_addBtn.addActionListener(mal);
     }
 
+    void addSubstractListener(ActionListener mal)
+    {
+        m_substractBtn.addActionListener(mal);
+    }
+    void addDerivateListener(ActionListener mal)
+    {
+        m_deriveBtn.addActionListener(mal);
+    }
+    void addIntegrateListener(ActionListener mal)
+    {
+        m_integrateBtn.addActionListener(mal);
+    }
     void addClearListener(ActionListener cal) {
         m_clearBtn.addActionListener(cal);
     }
