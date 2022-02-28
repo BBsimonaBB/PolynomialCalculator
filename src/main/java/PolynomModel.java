@@ -1,5 +1,6 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class PolynomModel {
     //... Constants
@@ -21,12 +22,13 @@ public class PolynomModel {
     }
 
     //=============================================================== multiplyBy
-    /** Multiply current total by a number.
-     * @param operand Number (as string) to multiply total by.
-     * @return
-     */
+
     public Polinom multiplyBy(Polinom poli1, Polinom poli2) {
         return poli1.multiply(poli2);
+    }
+    public Polinom divideBy(Polinom poli1, Polinom poli2)
+    {
+        return poli2.divide(poli1);
     }
     public Polinom addBy(Polinom poli1, Polinom poli2){
         return poli1.addition(poli2);

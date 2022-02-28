@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ListIterator;
 
 public class Polinom {
     ArrayList<Monomial> polinom;
@@ -20,9 +21,9 @@ public class Polinom {
     public String toString() {
         String tot = "";
         for(Monomial m : polinom) {
-            if(m.getCoef() >= 0)
-            tot = tot + "+" + m.toString();
-            else tot = tot + "" + m.toString();
+            if(m.getCoef() > 0)
+            tot = tot + "+" + m;
+            else tot = tot + "" + m;
         }
         return tot;
     }
@@ -51,8 +52,7 @@ public class Polinom {
     {
         for(Monomial i : polinom) {
             for (Monomial j : poli.polinom) {
-                if (i.getGrad() == j.getGrad())
-                    i.setCoef(i.getCoef() - j.getCoef());
+                i.substract(j);
             }
         }
         for(Monomial j : poli.polinom){
@@ -73,6 +73,7 @@ public class Polinom {
     }
     public Polinom derivate()
     {
+        Collections.sort(polinom);
         for(Monomial i : polinom)
         {
             i.derivate();
@@ -82,6 +83,7 @@ public class Polinom {
     }
     public Polinom integrate()
     {
+        Collections.sort(polinom);
         for(Monomial i : polinom)
         {
             i.integrate();
@@ -89,17 +91,16 @@ public class Polinom {
         Collections.sort(polinom);
         return this;
     }
-    public Polinom addSameGrades(Polinom poli)
+    public Polinom addSameGrades()
     {
-        int index = 0;
-        for(Monomial i: polinom)
-        {
-            if (i.getGrad() == poli.polinom.get(index).getGrad()) {
-                i.add(poli.polinom.get(index));
-                poli.polinom.remove(index);
-            }
-            else index ++;
-        }
+        Collections.sort(polinom);
+        for(int i=0;i<polinom.size() - 2;i++) {
+                    if (polinom.get(i).getGrad() == polinom.get(i+1).getGrad()) {
+                        polinom.get(i).setCoef(polinom.get(i).getCoef() + polinom.get(i+1).getCoef());
+                        polinom.remove(i+1);
+                    }
+                }
+        return this;
     }
     public Polinom multiply(Polinom poli1)
     {
@@ -108,8 +109,24 @@ public class Polinom {
             for(Monomial j :poli1.polinom)
                 rez.polinom.add(i.multiply(j));
         }
-        Collections.sort(rez.polinom); //acum trebuie adunate elem cu grade egale
-        //cod de adaugat...chem add same grades
+        return rez.addSameGrades();
+    }
+    public Polinom divide(Polinom poli1)
+    {
+        Collections.sort(poli1.polinom);
+        Collections.sort(this.polinom);
+        Polinom rez = new Polinom(new ArrayList<>());
+        while(poli1.polinom.get(0).getGrad() >= polinom.get(0).getGrad() && poli1.polinom.get(0).getCoef() != 0)
+        {
+            rez.polinom.add(poli1.polinom.get(0).divide(polinom.get(0)));
+            Polinom deScazut = new Polinom(new ArrayList<>());
+            deScazut.polinom.add(poli1.polinom.get(0).divide(polinom.get(0)));
+            poli1 = poli1.substract(this.multiply(deScazut));
+            deScazut.polinom.remove(0);
+            if(poli1.polinom.get(0).getCoef() == 0)
+                poli1.polinom.remove(0);
+            }
+        rez.addSameGrades();
         return rez;
     }
 

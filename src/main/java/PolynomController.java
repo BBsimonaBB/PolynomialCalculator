@@ -24,6 +24,7 @@ public class PolynomController {
         view.addIntegrateListener(new IntegrateListener());
         view.addClearListener(new ClearListener());
         view.addBtnNumberListener(new BtnNumberListener());
+        view.addDivideListener(new DivideListener());
     }
 
 
@@ -47,11 +48,24 @@ public class PolynomController {
             userInput2 = m_view.getInPolinom2();
             Polinom p2 = m_model.makePolynom(userInput2);
 
-            //p1 = m_model.multiplyBy(p1,p2);
             m_view.setTotal(m_model.multiplyBy(p1,p2).toString());
             }
         }
-    //end inner class MultiplyListener
+    class DivideListener implements  ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String userInput1 = "";
+            String userInput2 = "";
+            userInput1 = m_view.getInPolinom1();
+            Polinom p1 = m_model.makePolynom(userInput1);
+
+            userInput2 = m_view.getInPolinom2();
+            Polinom p2 = m_model.makePolynom(userInput2);
+
+
+            m_view.setTotal(m_model.divideBy(p1,p2).toString() +",    r = " +p1.toString());
+        }
+    }
 
     class AddListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {

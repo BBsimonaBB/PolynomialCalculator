@@ -24,9 +24,12 @@ public class Monomial implements Comparable<Monomial> {
     }
     @Override
     public String toString() {
-        if(grad == 0) return coef + "";
-        else if(grad == 1) return  coef + "*x";
-        else return coef + "*x^" + grad;
+        if(coef == 0) return "";
+        else {
+            if(grad == 0) return coef + "";
+            else if (grad == 1) return coef + "*x";
+            else return coef + "*x^" + grad;
+        }
     }
 
     @Override
@@ -61,6 +64,19 @@ public class Monomial implements Comparable<Monomial> {
         if (grad == m.grad)
             coef = coef + m.coef;
         return this;
+    }
+    public Monomial substract(Monomial m)
+    {
+        if (grad == m.grad)
+            coef = (coef - m.coef);
+        return this;
+    }
+    public Monomial divide(Monomial m)
+    {
+        if(grad < m.grad)
+            return this;
+        else
+            return new Monomial(grad-m.grad, coef/m.coef);
     }
 
     public float recogDivSign(String s)

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PolynomView extends JFrame {
-    private JTextField inPolinom1= new JTextField(5);
-    private JTextField inPolinom2 = new JTextField(5);
+    private JTextField inPolinom1= new JTextField(100);
+    private JTextField inPolinom2 = new JTextField(100);
     private JTextField m_totalTf = new JTextField(100);
     private JComboBox m_carePoli = new JComboBox(new String[]{"Polinom 1", "Polinom 2"});
     private JButton m_multiplyBtn = new JButton("Multiply");
@@ -34,17 +34,16 @@ public class PolynomView extends JFrame {
         m_totalTf.setText(m_model.getValue());
         m_totalTf.setEditable(false);
         content.setLayout(null);
-        //content.setLayout(new GridBagLayout());
         JLabel p1; JLabel p2;
 
         content.add( p1 = new JLabel("Polinom 1"));
         p1.setBounds(20,20,80,20);
-        inPolinom1.setBounds(130,20,100,20);
+        inPolinom1.setBounds(100,20,200,20);
         content.add(inPolinom1);
 
         content.add(p2 = new JLabel("Polinom 2"));
-        p2.setBounds(350,20,80,20);
-        inPolinom2.setBounds(420,20,100,20);
+        p2.setBounds(380,20,80,20);
+        inPolinom2.setBounds(450,20,200,20);
         content.add(inPolinom2);
 
         m_addBtn.setBounds(50,50,60,30);
@@ -90,8 +89,8 @@ public class PolynomView extends JFrame {
 
         JLabel t;
         content.add(t = new JLabel("Total"));
-        t.setBounds(200, 400, 30, 20);
-        m_totalTf.setBounds(250,400,200,20);
+        t.setBounds(70, 400, 30, 20);
+        m_totalTf.setBounds(150,400,350,20);
         content.add(m_totalTf);
 
         content.add(m_clearBtn);
@@ -145,6 +144,11 @@ public class PolynomView extends JFrame {
 
     void addMultiplyListener(ActionListener mal) {
         m_multiplyBtn.addActionListener(mal);
+    }
+
+    void addDivideListener(ActionListener mal)
+    {
+        m_divideBtn.addActionListener(mal);
     }
 
     void addAddListener(ActionListener mal)
