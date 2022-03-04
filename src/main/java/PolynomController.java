@@ -2,6 +2,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 public class PolynomController {
     private PolynomModel m_model;
     private PolynomView m_view;
@@ -40,82 +42,115 @@ public class PolynomController {
      */
     class MultiplyListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            String userInput1 = "";
-            String userInput2 = "";
-            userInput1 = m_view.getInPolinom1();
-            Polinom p1 = m_model.makePolynom(userInput1);
+            try {
+                UserText u1 = new UserText("");
+                u1.setInput(m_view.getInPolinom1());
+                Polinom p1 = m_model.makePolynom(u1);
 
-            userInput2 = m_view.getInPolinom2();
-            Polinom p2 = m_model.makePolynom(userInput2);
+                UserText u2 = new UserText("");
+                u2.setInput(m_view.getInPolinom2());
+                Polinom p2 = m_model.makePolynom(u2);
 
-            m_view.setTotal(m_model.multiplyBy(p1,p2).toString());
+                m_view.setTotal(m_model.multiplyBy(p1, p2).toString());
+            } catch (NullPointerException nfex) {
+                m_view.showError("Ati uitat sa introduceti ambii operanzi");
             }
+            catch (NumberFormatException | InvalidTextException nfex) {
+                m_view.showError("Polinomul introdus e invalid. Corectati !");
+            }
+        }
         }
     class DivideListener implements  ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            String userInput1 = "";
-            String userInput2 = "";
-            userInput1 = m_view.getInPolinom1();
-            Polinom p1 = m_model.makePolynom(userInput1);
+            try {
+                UserText u1 = new UserText("");
+                u1.setInput(m_view.getInPolinom1());
+                Polinom p1 = m_model.makePolynom(u1);
 
-            userInput2 = m_view.getInPolinom2();
-            Polinom p2 = m_model.makePolynom(userInput2);
+                UserText u2 = new UserText("");
+                u2.setInput(m_view.getInPolinom2());
+                Polinom p2 = m_model.makePolynom(u2);
 
+                m_view.setTotal(m_model.divideBy(p1, p2).toString() + ",    r = " + p1.toString());
+            } catch (NullPointerException nfex) {
+                m_view.showError("Ati uitat sa introduceti ambii operanzi");
+            }
+            catch (NumberFormatException | InvalidTextException nfex) {
+                m_view.showError("Polinomul introdus e invalid. Corectati !");
+            }
 
-            m_view.setTotal(m_model.divideBy(p1,p2).toString() +",    r = " +p1.toString());
         }
     }
-
     class AddListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            String userInput1 = "";
-            String userInput2 = "";
-            userInput1 = m_view.getInPolinom1();
-            Polinom p1 = m_model.makePolynom(userInput1);
+            try {
+                UserText u1 = new UserText("");
+                u1.setInput(m_view.getInPolinom1());
+                Polinom p1 = m_model.makePolynom(u1);
 
-            userInput2 = m_view.getInPolinom2();
-            Polinom p2 = m_model.makePolynom(userInput2);
-            System.out.println(p1);
-            System.out.println(p2);
-            p1 = m_model.addBy(p1,p2);
-            m_view.setTotal(p1.toString());
+                UserText u2 = new UserText("");
+                u2.setInput(m_view.getInPolinom2());
+                Polinom p2 = m_model.makePolynom(u2);
+
+                m_view.setTotal(m_model.addBy(p1, p2).toString());
+            } catch (NullPointerException nfex) {
+                m_view.showError("Ati uitat sa introduceti ambii operanzi");
+            } catch (NumberFormatException | InvalidTextException nfex) {
+                m_view.showError("Unul din polinomii introdusi e invalid. Corectati !");
+            }
         }
     }
     class SubstractListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
-            String userInput1 = "";
-            String userInput2 = "";
-            userInput1 = m_view.getInPolinom1();
-            Polinom p1 = m_model.makePolynom(userInput1);
+            try {
+                UserText u1 = new UserText("");
+                u1.setInput(m_view.getInPolinom1());
+                Polinom p1 = m_model.makePolynom(u1);
 
-            userInput2 = m_view.getInPolinom2();
-            Polinom p2 = m_model.makePolynom(userInput2);
+                UserText u2 = new UserText("");
+                u2.setInput(m_view.getInPolinom2());
+                Polinom p2 = m_model.makePolynom(u2);
 
-            p1 = m_model.substractBy(p1,p2);
-            m_view.setTotal(p1.toString());
+                m_view.setTotal(m_model.substractBy(p1, p2).toString());
+            } catch (NullPointerException nfex) {
+                m_view.showError("Ati uitat sa introduceti unul din operanzi");
+            }
+            catch (NumberFormatException | InvalidTextException nfex) {
+                m_view.showError("Polinomul introdus e invalid. Corectati !");
+            }
         }
-    }class DerivateListener implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
-            String userInput1 = "";
-
-            userInput1 = m_view.getInPolinom1();
-            Polinom p1 = m_model.makePolynom(userInput1);
-
-            p1 = m_model.derivateBy(p1);
-            m_view.setTotal(p1.toString());
-            System.out.println(p1);
+    }
+    class DerivateListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            try {
+                UserText u1 = new UserText("");
+                u1.setInput(m_view.getInPolinom1());
+                Polinom p1 = m_model.makePolynom(u1);
+                m_view.setTotal(m_model.derivateBy(p1).toString());
+            }
+            catch(NullPointerException nfex){
+                m_view.showError("Ati uitat sa introduceti Polinom 1");
+            }
+            catch (NumberFormatException | InvalidTextException nfex) {
+                m_view.showError("Polinomul introdus e invalid. Corectati !");
+            }
         }
     }
     class IntegrateListener implements  ActionListener{
         public void actionPerformed(ActionEvent e) {
-            String userInput1 = "";
-
-            userInput1 = m_view.getInPolinom1();
-            Polinom p1 = m_model.makePolynom(userInput1);
-
-            p1 = m_model.integrateBy(p1);
-            m_view.setTotal(p1.toString());
+            try {
+                UserText u1 = new UserText("");
+                u1.setInput(m_view.getInPolinom1());
+                Polinom p1 = m_model.makePolynom(u1);
+                p1 = m_model.integrateBy(p1);
+                m_view.setTotal(p1.toString() + " +c");
+            } catch (NullPointerException nfex) {
+                m_view.showError("Ati uitat sa introduceti Polinom 1");
+            }
+            catch (NumberFormatException | InvalidTextException nfex) {
+                m_view.showError("Polinomul introdus e invalid. Corectati !");
+            }
         }
     }
     class BtnNumberListener implements ActionListener {

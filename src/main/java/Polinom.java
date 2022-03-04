@@ -27,6 +27,12 @@ public class Polinom {
         }
         return tot;
     }
+    Polinom arrange()
+    {
+        this.addSameGrades();
+        Collections.sort(this.polinom);
+        return this;
+    }
     public Polinom addition(Polinom poli)
     {
         for(Monomial i : polinom) {
