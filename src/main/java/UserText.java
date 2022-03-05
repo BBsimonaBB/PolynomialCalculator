@@ -30,21 +30,45 @@ public class UserText {
             return alegOperand(s)-1;
         else return s.indexOf("x");
     }
-    public Polinom convertUserText() throws InvalidTextException{
+    public int cautTermenLiber(int piece)
+    {
+        String re = "[0-9][-+]x";
+        Pattern pat = Pattern.compile(re);
+        Matcher mat = pat.matcher(input.substring(0,piece+1));
+        if(mat.find())
+            return Math.max(input.substring(1).indexOf("+")+1,input.substring(1).indexOf("-")+1);
+        re = "[0-9][-+][0-9][*]x";
+        pat = Pattern.compile(re);
+        mat = pat.matcher(input.substring(0,piece+1));
+        if(mat.find())
+            return Math.max(input.substring(1).indexOf("+")+1,input.substring(1).indexOf("-")+1);
+        re = "[+-][0-9]*[-+]x";
+        pat = Pattern.compile(re);
+        mat = pat.matcher(input.substring(0,piece+1));
+        if(mat.find())
+            return Math.max(input.substring(1).indexOf("+")+1,input.substring(1).indexOf("-")+1);
+        re = "[+-][0-9]*[-+][*]x";
+        pat = Pattern.compile(re);
+        mat = pat.matcher(input.substring(0,piece+1));
+        if(mat.find())
+            return Math.max(input.substring(1).indexOf("+")+1,input.substring(1).indexOf("-")+1);
+        return 0;
+    }
+    public Polinom convertUserText(){
         if (!input.equals("")) {
-            UserText u = new UserText(input);
             int piece = cautIcs(input);
             Polinom p = new Polinom(new ArrayList<>());
             while (piece > -1) {
-                u.verifyText();
                 Monomial m = new Monomial(0, 0);
-                m.recognizeMonoid(input.substring(0, piece + 1));
+                int poz = cautTermenLiber(piece);
+                if(poz != 0)
+                    p.polinom.add(new Monomial(0,Float.parseFloat(input.substring(0,poz))));
+                m.recognizeMonoid(input.substring(poz, piece + 1));
                 p.polinom.add(m);
-                input = input.substring(piece + 1); //asta e un monoid!!
+                input = input.substring(piece + 1);
                 piece = cautIcs(input);
             }
             if (!input.equals("")) {
-                u.verifyText();
                 Monomial m = new Monomial(0, 0);
                 p.polinom.add(m.recognizeMonoid(input));
             }

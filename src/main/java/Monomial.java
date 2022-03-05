@@ -1,3 +1,6 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Monomial implements Comparable<Monomial> {
     private int grad;
     private float coef;
@@ -86,36 +89,45 @@ public class Monomial implements Comparable<Monomial> {
             int poz = s.indexOf("/");
             return (float)Integer.parseInt(s.substring(0,poz))/Integer.parseInt(s.substring(poz+1));
         }
+        else if(s.contains("*"))
+        {
+            int poz = s.indexOf("*");
+            return (float)Integer.parseInt(s.substring(0,poz)) * Integer.parseInt(s.substring(poz+1));
+        }
+        else return Float.parseFloat(s);
+    }
+    public int setGrad(String s)
+    {
+        if(!s.contains("^")) {
+            if (s.contains("x"))
+                return 1;
+            else return 0;
+        }
+        else if(!s.contains("x"))
+            return 0;
         else {
-            if (s.contains("+")) return Float.parseFloat(s.substring(1));
-            else if (s.contains("-")) return (float) (-1) * Float.parseFloat(s.substring(1));
-            else return Float.parseFloat(s);
+            int poz = s.indexOf("^");
+            return Integer.parseInt(s.substring(poz+1));
         }
     }
-
+    public float setCoeficient(String s)
+    {
+        if(!s.contains("x"))
+            return (recogDivSign(s));
+        if(!s.contains("*")){
+        if (s.charAt(0) == '-')
+            return -1;
+        else return 1;
+         }
+        else{
+        int poz = s.indexOf("*");
+        return recogDivSign(s.substring(0, poz));
+    }
+    }
     public Monomial recognizeMonoid(String s)
     {
-        if(!s.contains("x")) {
-            grad = 0;
-            coef = Float.parseFloat(s); // s=-1 => coef = -1 (exemplu...ia singur minusul)
-        }
-        else{
-            if(!s.contains("^")) {
-                grad = 1;
-            }
-            else{
-                int poz = s.indexOf("^");
-                grad = Integer.parseInt(s.substring(poz+1));
-            }
-            if(!s.contains("*"))
-                if(s.charAt(0) == '-')
-                    coef = -1;
-                else coef = 1;
-            else {
-                int poz = s.indexOf("*");
-                coef = Float.parseFloat(s.substring(0,poz));
-            }
-        }
+        grad = setGrad(s);
+        coef = setCoeficient(s);
         return this;
     }
 }
