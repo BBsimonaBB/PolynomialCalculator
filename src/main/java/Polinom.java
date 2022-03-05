@@ -135,5 +135,4 @@ public class Polinom {
         rez.addSameGrades();
         return rez;
     }
-
 }

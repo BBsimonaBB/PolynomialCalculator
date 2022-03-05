@@ -130,4 +130,15 @@ public class Monomial implements Comparable<Monomial> {
         coef = setCoeficient(s);
         return this;
     }
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+        if(obj instanceof Monomial) {
+            Monomial e = (Monomial) obj;
+            return (this.grad == e.grad) &&
+                    (this.coef == e.coef) ;
+        }
+        return false;
+    }
 }
