@@ -51,7 +51,7 @@ public class TestOperatii extends TestCase{
     public void testImpartire1() throws  Exception{
         UserText u1 = new UserText("2*x^3-5*x^2-4*x+3");
         UserText u2 = new UserText("x-0.5");
-        String r = "+2.0*x^2-4.0*x-6.0,    r = ";
+        String r = "+2.0*x^2-4.0*x-6.0,    r = 0.0";
         Polinom p1 = u1.convertUserText();
         Polinom p2 = u2.convertUserText();
         assertEquals(r, pm.divideBy(p1,p2).toString() + ",    r = " + p1.toString());
@@ -99,5 +99,49 @@ public class TestOperatii extends TestCase{
         Polinom p1 = u1.convertUserText();
         Polinom p2 = u2.convertUserText();
         assertEquals(r, pm.divideBy(p1,p2).toString() + ",    r = " + p1.toString());
+    }
+    public void testAdunare3() throws Exception {
+        UserText u1 = new UserText("x+3-3*x^2");
+        UserText u2 = new UserText("-x^2+4*x^4");
+        String r = "+4.0*x^4-4.0*x^2+1.0*x+3.0";
+        Polinom p1 = u1.convertUserText();
+        Polinom p2 = u2.convertUserText();
+        assertEquals(r, pm.addBy(p1,p2).toString());
+    }
+    public void testScadere3() throws Exception {
+        UserText u1 = new UserText("x+3-3*x^2");
+        UserText u2 = new UserText("x+3-3*x^2");
+        String r = "0.0";
+        Polinom p1 = u1.convertUserText();
+        Polinom p2 = u2.convertUserText();
+        assertEquals(r, pm.substractBy(p1,p2).toString());
+    }
+    public void testInmultire3() throws Exception{
+        UserText u1 = new UserText("-1");
+        UserText u2 = new UserText("-x-1-x^3-x");
+        String r = "+1.0*x^3+2.0*x+1.0";
+        Polinom p1 = u1.convertUserText();
+        Polinom p2 = u2.convertUserText();
+        assertEquals(r, pm.multiplyBy(p1,p2).toString());
+    }
+    public void testImpartire3() throws  Exception {
+        UserText u1 = new UserText("x-1");
+        UserText u2 = new UserText("x^2");
+        String r = "0.0,    r = +1.0*x-1.0";
+        Polinom p1 = u1.convertUserText();
+        Polinom p2 = u2.convertUserText();
+        assertEquals(r, pm.divideBy(p1, p2).toString() + ",    r = " + p1.toString());
+    }
+    public void testDerivare3() throws  Exception{
+        UserText u1 = new UserText("1232436");
+        String r = "0.0";
+        Polinom p1 = u1.convertUserText();
+        assertEquals(r, pm.derivateBy(p1).toString());
+    }
+    public void testIntegrare3() throws Exception{
+        UserText u1 = new UserText("0");
+        String r = "0.0";
+        Polinom p1 = u1.convertUserText();
+        assertEquals(r, pm.integrateBy(p1).toString());
     }
 }

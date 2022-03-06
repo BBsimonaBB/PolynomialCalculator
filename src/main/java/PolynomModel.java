@@ -1,10 +1,8 @@
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Locale;
 
 public class PolynomModel {
     //... Constants
-    static final String INITIAL_VALUE = "1";
+    static final String INITIAL_VALUE = "0";
 
     //... Member variable defining state of calculator.
     private BigInteger m_total; // The total current value state.

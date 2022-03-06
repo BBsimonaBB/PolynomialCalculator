@@ -16,7 +16,9 @@ public class Polinom {
             tot = tot + "+" + m;
             else tot = tot + "" + m;
         }
-        return tot;
+        if(tot.equals(""))
+            return "0.0";
+        else return tot;
     }
     void arrange()
     {
