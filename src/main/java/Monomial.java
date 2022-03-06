@@ -1,6 +1,3 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Monomial implements Comparable<Monomial> {
     private int grad;
     private float coef;
@@ -14,9 +11,6 @@ public class Monomial implements Comparable<Monomial> {
         return grad;
     }
 
-    public void setGrad(int grad) {
-        this.grad = grad;
-    }
 
     public float getCoef() {
         return coef;
@@ -37,23 +31,17 @@ public class Monomial implements Comparable<Monomial> {
 
     @Override
     public int compareTo(Monomial o) {
-        if(this.grad > o.grad)
-            return -1;
-        if(this.grad == o.grad)
-            return 0;
-        else return 1;
+        return Integer.compare(o.grad, this.grad);
     }
-    public Monomial derivate() {
+    public void derivate() {
         coef = coef * grad;
         if (grad != 0)
             grad--;
-        return this;
     }
-    public Monomial integrate()
+    public void integrate()
     {
         grad++;
         coef = coef/grad;
-        return this;
     }
     public Monomial multiply(Monomial m)
     {
@@ -62,17 +50,15 @@ public class Monomial implements Comparable<Monomial> {
         rez.grad = grad + m.grad;
         return rez;
     }
-    public Monomial add(Monomial m)
+    public void add(Monomial m)
     {
         if (grad == m.grad)
             coef = coef + m.coef;
-        return this;
     }
-    public Monomial substract(Monomial m)
+    public void substract(Monomial m)
     {
         if (grad == m.grad)
             coef = (coef - m.coef);
-        return this;
     }
     public Monomial divide(Monomial m)
     {

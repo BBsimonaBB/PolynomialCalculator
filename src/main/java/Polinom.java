@@ -1,20 +1,11 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.ListIterator;
 
 public class Polinom {
     ArrayList<Monomial> polinom;
 
     public Polinom(ArrayList<Monomial> p) {
         this.polinom = p;
-    }
-
-    public ArrayList<Monomial> getPolinom() {
-        return polinom;
-    }
-
-    public void setPolinom(ArrayList<Monomial> polinom) {
-        this.polinom = polinom;
     }
 
     @Override
@@ -27,11 +18,10 @@ public class Polinom {
         }
         return tot;
     }
-    Polinom arrange()
+    void arrange()
     {
         this.addSameGrades();
         Collections.sort(this.polinom);
-        return this;
     }
     public Polinom addition(Polinom poli)
     {

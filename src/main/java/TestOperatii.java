@@ -5,8 +5,6 @@ import java.util.ArrayList;
 public class TestOperatii extends TestCase{
 
     private static PolynomModel pm = new PolynomModel();
-    private static int nrTesteEfectuate = 0;
-    private static int nrTesteCuSucces = 0;
     public static void setUpBeforeClass() throws Exception {
         pm = new PolynomModel();
     }
