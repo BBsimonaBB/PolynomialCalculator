@@ -4,7 +4,7 @@ This application is a basic calculator that performs operations on polynoms. The
 
 ## Requirements
 
-Running of the program requires an IDE for Java development.
+Running the program requires an IDE for Java development.
 I personally use IntelliJ IDEA Community 2021.2.3
 
 ```bash
